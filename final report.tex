@@ -144,9 +144,9 @@ For the point of highest density though, \textbf{Delta} is just the maximum dist
 	\delta_i = \text{max}_{j} (d_{ij})
 \end{align*}
 
-Figure 2 shows a simple example of the quantities above described. Here \textbf{Rho} is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows are \textbf{Delta}.
+Figure 2 shows a simple example of the quantities above described. Here \textbf{$\rho$} is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows are \textbf{$\delta$}.
 
-Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{Rho} and \textbf{Delta} and tags them as cluster centers. The choice for which of them 
+Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{$\rho$} and \textbf{$\delta$} and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to select points 5 $\sigma$ away from the mean for \textbf{$\delta$} and 1 $\sigma$ away for \textbf{$\rho$}. This proved far away from robust.
 
 \section{Plots}
 
