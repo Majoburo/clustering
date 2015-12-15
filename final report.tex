@@ -102,16 +102,23 @@ AST 383}
 \section{Motivation}
 
 \section{Clustering Algorithms}
-\par We decided to survey a few clustering algorithms. \texttt{DBSCAN} is quite similar to Rockstar's algorithm, so it was a natural choice. One paper we saw in class \cite{FIDEPE}, described a new density-based algorithm that we thought could potentially give better performance, or at the very least more fully survey the landscape of clustering algorithms.
+\par We decided to survey a few clustering algorithms.
+\texttt{DBSCAN} is quite similar to Rockstar's algorithm, so it was a natural choice.
+One paper we saw in class \cite{FIDEPE}, described a new density-based algorithm that we thought could potentially give better performance, or at the very least more fully survey the landscape of clustering algorithms.
 
 \subsection{\texttt{DBSCAN}}
 \begin{figure}[ht]
 \centering
-%\includegraphics[scale=0.8]{plots/D31}
+\includegraphics[width=0.8\linewidth]{DBSCAN-Illustration}
 \caption{How \texttt{DBSCAN} selects the points in a cluster.}
 \label{fig:DBSCAN}
 \end{figure}
 
+
+% when talking about code
+\par It's worth noting a few optimizations that can be made to this algorithm.
+The distances between points, instead of being computed for each point ($O(N^2)$ lookups), can be computed in a type of tree structure ($O(N \log(N))$ lookups). Such position-tree structures are often called R-trees or R*-trees.
+In addition, the \texttt{expandCluster} routine is only called from a single location, so it may be safely inlined.
 
 \subsection{FIDEPE}
 
@@ -121,9 +128,7 @@ Local density ($\boldsymbol{\rho}$), is defined as the number of points $j$ in t
 \begin{align*}
 	\rho_i = \sum_j \chi(d_{ij}-d_c)
 \end{align*}
-
 where 
-
 \begin{align*}
 \chi(x)=
 \begin{cases}
@@ -144,7 +149,15 @@ For the point of highest density though, \textbf{Delta} is just the maximum dist
 	\delta_i = \text{max}_{j} (d_{ij})
 \end{align*}
 
-Figure 2 shows a simple example of the quantities above described. Here local density is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\linewidth]{fidepe_plots/FIDEPE}
+\caption{How the \texttt{FIDEPE} algorithm identifies points in a cluster.}
+\label{fig:FIDEPE}
+\end{figure}
+
+
+Figure \ref{fig:FIDEPE} shows a simple example of the quantities above described. Here local density is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows.
 
 Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{Rho} and \textbf{Delta} and 
 
