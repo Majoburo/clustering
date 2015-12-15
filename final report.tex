@@ -102,8 +102,16 @@ AST 383}
 \section{Motivation}
 
 \section{Clustering Algorithms}
+\par We decided to survey a few clustering algorithms. \texttt{DBSCAN} is quite similar to Rockstar's algorithm, so it was a natural choice. One paper we saw in class \cite{FIDEPE}, described a new density-based algorithm that we thought could potentially give better performance, or at the very least more fully survey the landscape of clustering algorithms.
 
-\subsection{DBSCAN}
+\subsection{\texttt{DBSCAN}}
+\begin{figure}[ht]
+\centering
+%\includegraphics[scale=0.8]{plots/D31}
+\caption{How \texttt{DBSCAN} selects the points in a cluster.}
+\label{fig:DBSCAN}
+\end{figure}
+
 
 \subsection{FIDEPE}
 
@@ -161,7 +169,7 @@ Once this two quantities are defined for each point the algorithm identifies the
 \includegraphics[width=0.35\linewidth]{plots/spiral_minpts}
 \caption{(Left) The effects of varying the \texttt{eps} parameter of \texttt{DBSCAN} for all reference distributions. \\ 
 (Right) The effects of varying the \texttt{MinPts} parameter of \texttt{DBSCAN}}.
-\label{fig:DBSCAN}
+\label{fig:DBSCANplots}
 \end{figure}
 
 
@@ -169,7 +177,7 @@ Once this two quantities are defined for each point the algorithm identifies the
 \centering
 
 \caption{The effects of varying the \texttt{FIDEPE} parameters.}
-\label{fig:FIDPEPE}
+\label{fig:FIDPEPEplots}
 \end{figure}
 
 \clearpage
