@@ -121,7 +121,32 @@ Local density ($\boldsymbol{\rho}$), is defined as the number of points $j$ in t
 \begin{align*}
 	\rho_i = \sum_j \chi(d_{ij}-d_c)
 \end{align*}
- where 
+
+where 
+
+\begin{align*}
+\chi(x)=
+\begin{cases}
+1 & x < 0 \\
+0 & otherwise
+\end{cases}
+\end{align*}
+
+Minimum Distance to a point of higher density (\textbf{Delta}) is self explanatory. 
+
+\begin{align*}
+	\delta_i = \text{min}_{j:\rho_j > \rho_i} (d_{ij})
+\end{align*}
+
+For the point of highest density though, \textbf{Delta} is just the maximum distance to another point.
+
+\begin{align*}
+	\delta_i = \text{max}_{j} (d_{ij})
+\end{align*}
+
+Figure 2 shows a simple example of the quantities above described. Here local density is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows.
+
+Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{Rho} and \textbf{Delta} and 
 
 \section{Plots}
 
