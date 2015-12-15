@@ -91,7 +91,7 @@
 \title{Final Report\\
 AST 383}
 \date{Dec 15 2015}
-\author{Robert Rosati \\ Maria Jose Bustamente Rosell}
+\author{Robert Rosati \\ Maria Jose Bustamante Rosell}
 \maketitle
 
 \begin{abstract}
@@ -105,6 +105,14 @@ AST 383}
 \subsection{DBSCAN}
 
 \subsection{FIDEPE}
+
+FIDEPE (FInd DEnsity PEaks) algorithm \cite{FIDEPE} considers two criteria per point: Local Density and Minimum Distance to a point of higher density.
+
+Local density (\textbf{Rho}), is defined as the number of points $j$ in the "neighborbood"; points closer than $d_c$ from point $i$.
+\begin{align*}
+	\rho_i = \sum_j \chi(d_{ij}-d_c)
+\end{align*}
+ where 
 
 \section{Plots}
 
