@@ -91,7 +91,7 @@
 \title{Final Report\\
 AST 383}
 \date{Dec 15 2015}
-\author{Robert Rosati \\ Maria Jose Bustamente Rosell}
+\author{Robert Rosati \\ Maria Jose Bustamante Rosell}
 \maketitle
 
 \begin{abstract}
@@ -99,6 +99,7 @@ AST 383}
 \end{abstract}
 
 \doublespacing
+\section{Motivation}
 
 \section{Clustering Algorithms}
 
@@ -110,10 +111,23 @@ AST 383}
 
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.8]{plots/D31_eps}
-\caption{The D31 reference distribution.}
-\label{fig:panmotor}
+%\includegraphics[scale=0.8]{plots/D31}
+\caption{Our reference distributions.}
+\label{fig:reference}
 \end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4\linewidth]{plots/Aggregation_eps} \includegraphics[width=0.4\linewidth]{plots/Aggregation_minpts} \\
+\includegraphics[width=0.4\linewidth]{plots/Compound_eps} \includegraphics[width=0.4\linewidth]{plots/Compound_minpts} \\
+\includegraphics[width=0.4\linewidth]{plots/D31_eps}     \includegraphics[width=0.4\linewidth]{plots/D31_minpts} \\
+\includegraphics[width=0.4\linewidth]{plots/jain_eps}    \includegraphics[width=0.4\linewidth]{plots/jain_minpts} \\
+\includegraphics[width=0.4\linewidth]{plots/spiral_eps}  \includegraphics[width=0.4\linewidth]{plots/spiral_minpts}
+\caption{(Left) The effects of varying the \texttt{eps} parameter of \texttt{DBSCAN} for all reference distributions. \\ 
+(Right) The effects of varying the \texttt{MinPts} parameter of \texttt{DBSCAN}}
+\label{fig:eps}
+\end{figure}
+
 
 
 \clearpage
