@@ -99,6 +99,7 @@ AST 383}
 \end{abstract}
 
 \doublespacing
+\section{Motivation}
 
 \section{Clustering Algorithms}
 
@@ -106,9 +107,9 @@ AST 383}
 
 \subsection{FIDEPE}
 
-FIDEPE (FInd DEnsity PEaks) algorithm \cite{FIDEPE} considers two criteria per point: Local Density and Minimum Distance to a point of higher density.
+\texttt{FIDEPE} (FInd DEnsity PEaks) algorithm \cite{FIDEPE} considers two criteria per point: Local Density and Minimum Distance to a point of higher density.
 
-Local density (\textbf{Rho}), is defined as the number of points $j$ in the "neighborbood"; points closer than $d_c$ from point $i$.
+Local density ($\boldsymbol{\rho}$), is defined as the number of points $j$ in the "neighborbood"; points closer than $d_c$ from point $i$.
 \begin{align*}
 	\rho_i = \sum_j \chi(d_{ij}-d_c)
 \end{align*}
@@ -143,11 +144,33 @@ Once this two quantities are defined for each point the algorithm identifies the
 
 \begin{figure}[ht]
 \centering
-\includegraphics[scale=0.8]{plots/D31_eps}
-\caption{The D31 reference distribution.}
-\label{fig:panmotor}
+%\includegraphics[scale=0.8]{plots/D31}
+\caption{Our reference distributions.}
+\label{fig:reference}
 \end{figure}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.35\linewidth]{plots/Aggregation_eps} \includegraphics[width=0.35\linewidth]{plots/Aggregation_minpts} \\
+\includegraphics[width=0.35\linewidth]{plots/Compound_eps} \includegraphics[width=0.35\linewidth]{plots/Compound_minpts} \\
+\includegraphics[width=0.35\linewidth]{plots/D31_eps}
+\includegraphics[width=0.35\linewidth]{plots/D31_minpts} \\
+\includegraphics[width=0.35\linewidth]{plots/jain_eps}
+\includegraphics[width=0.35\linewidth]{plots/jain_minpts} \\
+\includegraphics[width=0.35\linewidth]{plots/spiral_eps}
+\includegraphics[width=0.35\linewidth]{plots/spiral_minpts}
+\caption{(Left) The effects of varying the \texttt{eps} parameter of \texttt{DBSCAN} for all reference distributions. \\ 
+(Right) The effects of varying the \texttt{MinPts} parameter of \texttt{DBSCAN}}.
+\label{fig:DBSCAN}
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering
+
+\caption{The effects of varying the \texttt{FIDEPE} parameters.}
+\label{fig:FIDPEPE}
+\end{figure}
 
 \clearpage
 \bibliographystyle{plain}
