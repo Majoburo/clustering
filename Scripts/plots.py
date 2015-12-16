@@ -107,8 +107,8 @@ from fidepe2 import FIDEPE
 
 # try clustering a real dataset
 
-datasets = ['spiral','Aggregation','D31','jain','Compound']
-right_contour_num = [3,7,31,3,5]
+datasets = ['spiral','Aggregation','jain','Compound'] #'D31'
+right_cluster_num = [3,7,3,5] # 31
 import os
 
 
@@ -125,6 +125,13 @@ for dataset in datasets:
     f = open(posfname,'r')
     data = np.loadtxt(f)
     f.close()
+
+    fig = plt.figure()
+    fig.suptitle(dataset)
+    plt.scatter(data[:,0],data[:,1],c=data[:,2],s=100)
+    plt.show()
+    plt.close()
+    continue
 
     points=[]
     for i in range(data.shape[0]):
@@ -150,12 +157,14 @@ for dataset in datasets:
 
     pos = np.array([p.pos for p in points])
 
+
     max_stddelta = 5
     max_cutoff_d = 10
     data = np.zeros((max_cutoff_d,max_stddelta))
 #    max_eps = 8.5
 #    max_minpts = 15
 #    data = np.zeros((2*max_eps-2,max_minpts-2),dtype=int)
+
     with open('contour.txt','w') as f:
         i=0
         for e in np.arange(0,max_cutoff_d):
