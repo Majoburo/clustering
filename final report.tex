@@ -102,11 +102,23 @@ AST 383}
 \section{Motivation}
 
 \section{Clustering Algorithms}
-\par We decided to survey a few clustering algorithms.
-\texttt{DBSCAN} is quite similar to Rockstar's algorithm, so it was a natural choice.
-One paper we saw in class \cite{FIDEPE}, described a new density-based algorithm that we thought could potentially give better performance, or at the very least more fully survey the landscape of clustering algorithms.
+\par For our final project we decided to implement and compare the robustness of two density-based clustering algorithms under variations of user-defined parameters. 
+Clustering algorithms have a wide variety of applications that range from satellite image segmentation, noise filtering and outlier detection, prediction of stock prices to bioinformatics. In particular, they are of high importance in astronomy when trying to identify dark matter halos and sub-halo structure.
+There is a wide range of clustering algorithms out there for the taking. When handling large amounts of particles (in the order of trillions) the question of simplicity an easy parallelization arises also as a defining criterion. Both of the algorithms compared here are quite simple and easy to parallelize. \texttt{DBSCAN} is currently implemented on the latest halo-finders being developed \cite{BDCATS} and \textt{FIDEPE}, being quite a new algorithm, still has no implementation on cosmology (at least that we know of), the more reason to explore the code's performance.
+
 
 \subsection{\texttt{DBSCAN}}
+
+The \texttt{DBSCAN} (Density-Based Spatial Clustering of Applications with Noise) algorithm is a version of \texttt{FOF} (Friends of Friends) in which, unlike the former, the local density of a point is taken into consideration. This algorithm classifies points as being core points, density-reachable points and outliers. This classification is based on two user defined parameters: the radius of your neighborhood ($\epsilon $) and the minimum amount of points within it ($minPts$).
+
+\begin{itemize}
+\item A point $p$ is a core point if at least $minPts$ points are within distance ? of it (in it's neighborhood). Those points are said to be directly reachable from $p$. No points are reachable from a non-core point.
+\item A point $q$ is reachable from $p$ if there is a path $p_1, ..., p_n$ with $p_1 = p$ and $p_n = q$, where each $p_{i+1}$ is directly reachable from $p_i $(so all the points on the path must be core points, with the possible exception of $q$).
+\item All points not reachable from any other point are outliers.
+\end{itemize}
+
+Once a core point is selected, all the points reachable from it will be tagged as part of the same cluster.
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\linewidth]{DBSCAN-Illustration}
@@ -114,6 +126,7 @@ One paper we saw in class \cite{FIDEPE}, described a new density-based algorithm
 \label{fig:DBSCAN}
 \end{figure}
 
+In this diagram, $minPts = 3$. Point A and the other red points are core points, because at least three points surround it in an ? radius. Because they are all reachable from one another, they form a single cluster. Points B and C are not core points, but are reachable from A (via other core points) and thus belong to the cluster as well. Point N is a noise point that is neither a core point nor density-reachable.
 
 % when talking about code
 \par It's worth noting a few optimizations that can be made to this algorithm.
