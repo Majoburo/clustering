@@ -118,14 +118,14 @@ The \texttt{DBSCAN} (Density-Based Spatial Clustering of Applications with Noise
 \end{itemize}
 
 Once a core point is selected, all the points reachable from it will be tagged as part of the same cluster.
-
-\begin{figure}[ht]
+\FloatBarrier
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.8\linewidth]{DBSCAN-Illustration}
 \caption{How \texttt{DBSCAN} selects the points in a cluster.}
 \label{fig:DBSCAN}
-\end{figure}
-
+\end{figure}\
+\FloatBarrier
 In this diagram [wikipedia], $minPts = 3$. Point A and the other red points are core points, because at least three points surround it in an $\epsilon$  radius. Because they are all reachable from one another, they form a single cluster. Points B and C are not core points, but are reachable from A (via other core points) and thus belong to the cluster as well. Point N is a noise point that is neither a core point nor density-reachable.
 
 % when talking about code
