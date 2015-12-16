@@ -108,6 +108,7 @@ from fidepe2 import FIDEPE
 # try clustering a real dataset
 
 datasets = ['spiral','Aggregation','D31','jain','Compound']
+right_contour_num = [3,7,31,3,5]
 import os
 
 
@@ -151,37 +152,37 @@ for dataset in datasets:
 
     max_stddelta = 5
     max_cutoff_d = 10
-    data = np.zeros((max_cutoff_d,max_stddelta),dtype=int)
-    i=0
-    for e in np.arange(0,max_cutoff_d):
-        j=0
-        for d in np.arange(0,max_stddelta):
-            for p in points:
-                p.neighbors = set([])
-                p.cluster = 0
-                p.noise = False
-                p.density = 0
-                p.delta = [100000,0]
-                p.cluster_2 = 0
-                p.hborder = False
-                p.clcenter = False
+    data = np.zeros((max_cutoff_d,max_stddelta))
+#    max_eps = 8.5
+#    max_minpts = 15
+#    data = np.zeros((2*max_eps-2,max_minpts-2),dtype=int)
+    with open('contour.txt','w') as f:
+        i=0
+        for e in np.arange(0,max_cutoff_d):
+            j=0
+            for d in np.arange(0,max_stddelta):
+                for p in points:
+                    p.neighbors = set([])
+                    p.cluster = 0
+                    p.noise = False
+                    p.density = 0
+                    p.delta = [100000,0]
+                    p.cluster_2 = 0
+                    p.hborder = False
+                    p.clcenter = False
 
-
-            FIDEPE(points,dist,e,d,nstddensity)
-            C = [p.cluster_2 for p in points]
-            #fig = plt.figure()
-            #fig.suptitle('cutoff_d: {0}, Clusters: {1}, stddelta: {2},stddensity {3}'.format(cutoff_d,len(set(C)),d,nstddensity), fontsize=14, fontweight='bold')
-            data[i,j] = len(set(C))
-            #plt.scatter(pos[:,0],pos[:,1],c=C)
-            #plt.savefig('frame{0:02d}'.format(i))
-            #plt.close()
-            j+=1
-        i+=1
-    with open('contour.txt'.format(dataset),'w') as f:
-        for j in range(0,max_stddelta):
-            for i in range(0,max_cutoff_d):
-                f.write("{0} {1} {2}\n".format(i,j,data[i,j]))
-            f.write("\n")
+                FIDEPE(points,dist,e,d,nstddensity)
+                #DBSCAN2(e,d)
+                C = [p.cluster_2 for p in points]
+                #fig = plt.figure()
+                #fig.suptitle('cutoff_d: {0}, Clusters: {1}, stddelta: {2},stddensity {3}'.format(cutoff_d,len(set(C)),d,nstddensity), fontsize=14, fontweight='bold')
+                data[i,j] = len(set(C))
+                f.write("{} {} {}\n".format(e,d,data[i,j]))
+                #plt.scatter(pos[:,0],pos[:,1],c=C)
+                #plt.savefig('frame{0:02d}'.format(i))
+                #plt.close()
+                j+=1
+            i+=1
     #plt.contour(np.arange(1,max_cutoff_d),np.arange(0,max_stddelta),data)
     #plt.xlabel('stddelta'); plt.ylabel('Number of Clusters')
     #plt.savefig('fidepe_plots/{0}_contour'.format(dataset))
@@ -189,4 +190,5 @@ for dataset in datasets:
 
     #os.system('convert -delay 100 -loop 0 *.png fidepe_plots/{0}.gif; rm frame*.png'.format(dataset))
     os.system('gnuplot contour.gnu')
-    os.system('mv plot.ps fidepe_plots/{0}_contour.ps'.format(dataset))
+    os.system('mv contour.txt fidepe_plots/{0}.dat'.format(dataset))
+    os.system('mv plot.ps fidepe_plots/{0}_3d.ps'.format(dataset))
