@@ -78,7 +78,7 @@
 commentstyle=\color{OliveGreen},
 keywordstyle=\color{blue},
 tabsize=4,
-numbers=left,
+numbers=none,
 stringstyle=\color{red},
 language=Python,
 inputencoding=utf8,
@@ -119,13 +119,15 @@ The \texttt{DBSCAN} (Density-Based Spatial Clustering of Applications with Noise
 
 Once a core point is selected, all the points reachable from it will be tagged as part of the same cluster.
 
+\FloatBarrier
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.8\linewidth]{DBSCAN-Illustration}
 \caption{How \texttt{DBSCAN} selects the points in a cluster.}
 \label{fig:DBSCAN}
-\end{figure}
-
+\end{figure}\
+\FloatBarrier
 In this diagram [wikipedia], $minPts = 3$. Point A and the other red points are core points, because at least three points surround it in an $\epsilon$  radius. Because they are all reachable from one another, they form a single cluster. Points B and C are not core points, but are reachable from A (via other core points) and thus belong to the cluster as well. Point N is a noise point that is neither a core point nor density-reachable.
 
 % when talking about code
@@ -177,8 +179,9 @@ Figure \ref{fig:FIDEPE} shows a simple example of the quantities above described
 
 Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{$\rho$} and \textbf{$\delta$} and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to select points 5 $\sigma$ away from the mean for \textbf{$\delta$} and 1 $\sigma$ away for \textbf{$\rho$}. This selection criteria proved far away from robust.
 \subsubsection{Implementation}
+\singlespacing
 \lstinputlisting{fidepe.py}
-
+\doublespacing
 \section{Plots}
 
 \begin{figure}[ht]
