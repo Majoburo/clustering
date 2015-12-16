@@ -107,7 +107,7 @@ from fidepe2 import FIDEPE
 
 # try clustering a real dataset
 
-datasets = ['spiral','Aggregation','jain','Compound'] #'D31'
+datasets = ['Aggregation',#'spiral','Aggregation','jain','Compound'] #'D31'
 right_cluster_num = [3,7,3,5] # 31
 import os
 
@@ -158,20 +158,20 @@ for dataset in datasets:
     pos = np.array([p.pos for p in points])
 
 
-#    max_stddelta = 5
-#    max_cutoff_d = 10
-#    data = np.zeros((max_cutoff_d,max_stddelta))
-    max_eps = 8.5
-    max_minpts = 15
-    data = np.zeros((2*max_eps-2,max_minpts-2),dtype=int)
+    max_stddelta = 7
+    max_cutoff_d = 10
+    data = np.zeros((max_cutoff_d,max_stddelta))
+#    max_eps = 8.5
+#    max_minpts = 15
+#    data = np.zeros((2*max_eps-2,max_minpts-2),dtype=int)
 
     with open('contour.txt','w') as f:
         i=0
-        #for e in np.arange(0,max_cutoff_d):
-        for e in np.arange(1,max_eps,0.5):
+        for e in np.arange(0,max_cutoff_d):
+        #for e in np.arange(1,max_eps,0.5):
             j=0
-            #for d in np.arange(0,max_stddelta):
-            for d in np.arange(2,max_minpts):
+            for d in np.arange(0,max_stddelta):
+            #for d in np.arange(2,max_minpts):
                 for p in points:
                     p.neighbors = set([])
                     p.cluster = 0
@@ -182,9 +182,9 @@ for dataset in datasets:
                     p.hborder = False
                     p.clcenter = False
 
-                DBSCAN2(e,d)
                 #DBSCAN2(e,d)
-                C = [p.cluster for p in points]
+                FIDEPE(points,dist,e,d,nstddensity)
+                C = [p.cluster_2 for p in points]
                 #fig = plt.figure()
                 #fig.suptitle('cutoff_d: {0}, Clusters: {1}, stddelta: {2},stddensity {3}'.format(cutoff_d,len(set(C)),d,nstddensity), fontsize=14, fontweight='bold')
                 data[i,j] = len(set(C))
@@ -200,8 +200,8 @@ for dataset in datasets:
     #plt.close()
 
     #os.system('convert -delay 100 -loop 0 *.png fidepe_plots/{0}.gif; rm frame*.png'.format(dataset))
-    os.system('gnuplot contour.gnu')
-    os.system('mv contour.txt ../plots/dbscan/{0}.dat'.format(dataset))
-    os.system('mv plot.ps ../plots/dbscan/{0}_3d.ps'.format(dataset))
-    os.system('ps2pdf ../plots/dbscan/{0}_3d.ps ../plots/dbscan/{0}_3d.pdf'.format(dataset))
-    os.system('pdfcrop ../plots/dbscan/{0}_3d.pdf'.format(dataset))
+    #os.system('gnuplot -e "passedtitle=\'{0}\'" contour.gnu'.format(dataset))
+    os.system('mv contour.txt ../plots/fidepe/{0}.dat'.format(dataset))
+    #os.system('mv plot.ps ../plots/fidepe/{0}_contour.ps'.format(dataset))
+    #os.system('ps2pdf ../plots/fidepe/{0}_contour.ps ../plots/fidepe/{0}_contour.pdf'.format(dataset))
+    #os.system('pdfcrop ../plots/fidepe/{0}_contour.pdf'.format(dataset))
