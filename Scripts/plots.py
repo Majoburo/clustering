@@ -103,7 +103,7 @@ def expandCluster2(p,j,eps,MinPts):
                         p2.cluster = j
         return True
 
-from fidepe import FIDEPE
+from fidepe2 import FIDEPE
 
 # try clustering a real dataset
 
