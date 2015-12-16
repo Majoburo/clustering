@@ -91,7 +91,7 @@
 \title{Final Report\\
 AST 383}
 \date{Dec 15 2015}
-\author{Robert Rosati \\ Maria Jose Bustamante Rosell}
+\author{Robert Rosati \\ Mar\'{i}a Jos\'{e} Bustamante Rosell}
 \maketitle
 
 \begin{abstract}
@@ -133,6 +133,8 @@ In this diagram, $minPts = 3$. Point A and the other red points are core points,
 The distances between points, instead of being computed for each point ($O(N^2)$ lookups), can be computed in a type of tree structure ($O(N \log(N))$ lookups). Such position-tree structures are often called R-trees or R*-trees.
 In addition, the \texttt{expandCluster} routine is only called from a single location, so it may be safely inlined.
 
+%prediction under varying parameters
+
 \subsection{FIDEPE}
 
 \texttt{FIDEPE} (FInd DEnsity PEaks) algorithm \cite{FIDEPE} considers two criteria per point: Local Density and Minimum Distance to a point of higher density.
@@ -162,7 +164,6 @@ For the point of highest density though, \textbf{Delta} is just the maximum dist
 	\delta_i = \text{max}_{j} (d_{ij})
 \end{align*}
 
-
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\linewidth]{fidepe_plots/FIDEPE}
@@ -187,12 +188,17 @@ Once this two quantities are defined for each point the algorithm identifies the
 
 \begin{figure}[ht]
 \centering
+\raisebox{0.75in}{\rotatebox[]{90}{Aggregation}}
 \includegraphics[width=0.35\linewidth]{plots/Aggregation_eps} \includegraphics[width=0.35\linewidth]{plots/Aggregation_minpts} \\
+\raisebox{0.75in}{\rotatebox[]{90}{Compound}}
 \includegraphics[width=0.35\linewidth]{plots/Compound_eps} \includegraphics[width=0.35\linewidth]{plots/Compound_minpts} \\
+\raisebox{0.75in}{\rotatebox[]{90}{D31}}
 \includegraphics[width=0.35\linewidth]{plots/D31_eps}
 \includegraphics[width=0.35\linewidth]{plots/D31_minpts} \\
+\raisebox{0.75in}{\rotatebox[]{90}{jain}}
 \includegraphics[width=0.35\linewidth]{plots/jain_eps}
 \includegraphics[width=0.35\linewidth]{plots/jain_minpts} \\
+\raisebox{0.75in}{\rotatebox[]{90}{spiral}}
 \includegraphics[width=0.35\linewidth]{plots/spiral_eps}
 \includegraphics[width=0.35\linewidth]{plots/spiral_minpts}
 \caption{(Left) The effects of varying the \texttt{eps} parameter of \texttt{DBSCAN} for all reference distributions. \\ 
@@ -208,6 +214,10 @@ Once this two quantities are defined for each point the algorithm identifies the
 \label{fig:FIDPEPEplots}
 \end{figure}
 
+
+\section{Results}
+\par Referencing Figure \ref{fig:DBSCANplots}, the \texttt{DBSCAN} algorithm does not seem particularly robust to variation in either \texttt{eps} or \texttt{MinPts}. Our proposed mechanism for objectively identifying the number of active clusters appears to fail in almost all test cases. The \texttt{spiral} dataset seems to be the exception, in that the flattest regions of the plots occur at the true number of clusters. The most densely clustered dataset, \texttt{D31}, converges in the range of \texttt{MinPts} plotted to the true cluster number, but fails to plateau in the range of \texttt{eps} plotted. (Describe other datasets?)
+\par Our choice not to explore the full parameter space for these plots likely has contributed to our inability to find the peak cluster plateau we na\"\i vely expect. However, there is no guarantee of any sort of robustness in these algorithms. It may possible to construct datasets with a plateau on a false cluster number somewhere in the parameter space. We leave these questions for future work, now only concluding that is heuristic is useful in some nonzero percentage of typical datasets.
 \clearpage
 \bibliographystyle{plain}
 \bibliography{research}
