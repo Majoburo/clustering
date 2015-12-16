@@ -192,6 +192,7 @@ Below you can find our implementation of \texttt{FIDEPE} as described above. As 
 \end{center}
 \lstinputlisting{../Scripts/fidepe.py}
 \doublespacing
+\newgeometry{margin=0.5in}
 \section{Plots}
 %\begin{figure}[ht]
 %\centering
@@ -212,14 +213,14 @@ Below you can find our implementation of \texttt{FIDEPE} as described above. As 
 %(Right) The effects of varying the \texttt{MinPts} parameter of \texttt{DBSCAN}}.
 %\label{fig:DBSCANplots}
 %\end{figure}
-\newgeometry{margin=0.5in}
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.47\linewidth]{../plots/datasets/Aggregation}
 \includegraphics[width=0.47\linewidth]{../plots/datasets/Compound} \\
 \includegraphics[width=0.47\linewidth]{../plots/datasets/jain}
 \includegraphics[width=0.47\linewidth]{../plots/datasets/spiral}
-\caption{The test datasets used in this analysis, from \cite{datasets}. The points are highlighted by reference cluster number. For reference, the accepted number of clusters for each dataset is, from left-to-right and top-to-bottom, 7,5,2, and 3.}
+\caption{The test datasets used in this analysis, from \cite{datasets}. The points are highlighted by (canonical) cluster membership. For reference, the canonical number of clusters for each dataset is, from left-to-right and top-to-bottom, 7,5,2, and 3.}
 \label{fig:distributions}
 \end{figure}
 
@@ -229,7 +230,7 @@ Below you can find our implementation of \texttt{FIDEPE} as described above. As 
 \includegraphics[width=0.47\linewidth]{../plots/dbscan/Compound_DBSCAN} \\
 \includegraphics[width=0.47\linewidth]{../plots/dbscan/jain_DBSCAN}
 \includegraphics[width=0.47\linewidth]{../plots/dbscan/spiral_DBSCAN}
-\caption{The effects of varying the \texttt{DBSCAN} algorithm parameters. Note that the accepted number of clusters is reached in a fairly wide band in most plots.}
+\caption{Number of clusters detected plotted versus the \texttt{DBSCAN} parameters. The plots above are in the same order as their corresponding datasets in Figure \ref{fig:distributions}. Note that the accepted number of clusters is reached in a fairly wide band in most plots.}
 \label{fig:DBSCANplots}
 \end{figure}
 
@@ -239,12 +240,11 @@ Below you can find our implementation of \texttt{FIDEPE} as described above. As 
 \includegraphics[width=0.47\linewidth]{../plots/fidepe/Compound_FIDEPE} \\
 \includegraphics[width=0.47\linewidth]{../plots/fidepe/jain_FIDEPE}
 \includegraphics[width=0.47\linewidth]{../plots/fidepe/spiral_FIDEPE}
-\caption{The effects of varying the \texttt{FIDEPE} parameters.}
+\caption{Number of clusters detected plotted versus the \texttt{FIDEPE} parameters. The plots above are in the same order as their corresponding datasets in Figure \ref{fig:distributions}.}
 \label{fig:FIDPEPEplots}
 \end{figure}
 \restoregeometry
 \doublespacing
-
 
 \section{Results}
 
