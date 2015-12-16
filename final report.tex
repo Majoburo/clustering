@@ -95,16 +95,18 @@ AST 383}
 \maketitle
 
 \begin{abstract}
-\par Blah blah blah. Clusters are pretty man.
+\par For our final project, we decided to implement and compare the robustness of two top of the line density-based clustering algorithms under variations of user-defined parameters.
 \end{abstract}
 
 \doublespacing
 \section{Motivation}
 
-\section{Clustering Algorithms}
 \par For our final project we decided to implement and compare the robustness of two density-based clustering algorithms under variations of user-defined parameters. 
-Clustering algorithms have a wide variety of applications that range from satellite image segmentation, noise filtering and outlier detection, prediction of stock prices to bioinformatics. In particular, they are of high importance in astronomy when trying to identify dark matter halos and sub-halo structure.
-There is a wide range of clustering algorithms out there for the taking. When handling large amounts of particles (in the order of trillions) the question of simplicity an easy parallelization arises also as a defining criterion. Both of the algorithms compared here are quite simple and easy to parallelize. \texttt{DBSCAN} is currently implemented on the latest halo-finders being developed \cite{BDCATS} and \texttt{FIDEPE}, being quite a new algorithm, still has no implementation on cosmology (at least that we know of), the more reason to explore the code's performance.
+\par Clustering algorithms have a wide variety of applications that range from satellite image segmentation, noise filtering and outlier detection, prediction of stock prices to bioinformatics. In particular, they are of high importance in astronomy when trying to identify dark matter halos and sub-halo structure.
+\par There is a wide range of clustering algorithms out there for the taking. When handling large amounts of particles (in the order of trillions) the question of simplicity an easy parallelization arises also as a defining criterion. Both of the algorithms compared here are quite simple and easy to parallelize. \texttt{DBSCAN} is currently implemented on the latest halo-finders being developed \cite{BDCATS} and \texttt{FIDEPE}, being quite a new algorithm, still has no implementation on cosmology (at least that we know of), the more reason to explore the code's performance.
+
+\section{Clustering Algorithms}
+
 
 
 \subsection{\texttt{DBSCAN}}
@@ -112,13 +114,15 @@ There is a wide range of clustering algorithms out there for the taking. When ha
 The \texttt{DBSCAN} (Density-Based Spatial Clustering of Applications with Noise) algorithm is a version of \texttt{FOF} (Friends of Friends) in which, unlike the former, the local density of a point is taken into consideration. This algorithm classifies points as being core points, density-reachable points and outliers. This classification is based on two user defined parameters: the radius of your neighborhood ($\epsilon $) and the minimum amount of points within it ($minPts$). \cite{DBSCAN}
 
 \begin{itemize}
-\item A point $p$ is a core point if at least $minPts$ points are within distance $\epsilon$ of it (in it's neighborhood). Those points are said to be directly reachable from $p$. No points are reachable from a non-core point.
-\item A point $q$ is reachable from $p$ if there is a path $p_1, ..., p_n$ with $p_1 = p$ and $p_n = q$, where each $p_{i+1}$ is directly reachable from $p_i $(so all the points on the path must be core points, with the possible exception of $q$).
+\item A point $p$ is a core point if at least $minPts$ points are within distance $\epsilon$ of it. Those points are said to be directly reachable from $p$ (in it's neighborhood). No points are reachable from a non-core point.
+\item A point $q$ is reachable from $p$ if there is a path $p_1, ..., p_n$ with $p_1 = p$ and $p_n = q$, where each $p_{i+1}$ is directly reachable from $p_i $ (so all the points on the path must be core points, with the possible exception of $q$).
 \item All points not reachable from any other point are outliers.
 \end{itemize}
 
 Once a core point is selected, all the points reachable from it will be tagged as part of the same cluster.
+
 \FloatBarrier
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.8\linewidth]{DBSCAN-Illustration}
@@ -126,7 +130,7 @@ Once a core point is selected, all the points reachable from it will be tagged a
 \label{fig:DBSCAN}
 \end{figure}\
 \FloatBarrier
-In this diagram [wikipedia], $minPts = 3$. Point A and the other red points are core points, because at least three points surround it in an $\epsilon$  radius. Because they are all reachable from one another, they form a single cluster. Points B and C are not core points, but are reachable from A (via other core points) and thus belong to the cluster as well. Point N is a noise point that is neither a core point nor density-reachable.
+Figure \ref{fig:DBSCAN} [wikipedia] shows a simple version of DBSCAN with $minPts = 3$. Point A and the other red points are core points, because at least three points surround it in an $\epsilon$  radius. Because they are all reachable from one another, they form a single cluster. Points B and C are not core points, but are reachable from A (via other core points) and thus belong to the cluster as well. Point N is a noise point that is neither a core point nor density-reachable.
 
 % when talking about code
 \par It's worth noting a few optimizations that can be made to our implementation of this algorithm.
@@ -134,6 +138,7 @@ The distances between points, instead of being computed for each point ($O(N^2)$
 In addition, the \texttt{expandCluster} routine is only called from a single location, so it may be safely inlined.
 
 %prediction under varying parameters
+\pagebreak
 
 \subsection{FIDEPE}
 
@@ -175,11 +180,28 @@ For the point of highest density though, \textbf{Delta} is just the maximum dist
 Figure \ref{fig:FIDEPE} shows a simple example of the quantities above described. Here \textbf{Rho} is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows are \textbf{Delta}.
 
 
-Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{$\rho$} and \textbf{$\delta$} and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to select points 5 $\sigma$ away from the mean for \textbf{$\delta$} and 1 $\sigma$ away for \textbf{$\rho$}. This proved far away from robust.
+Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{$\rho$} and \textbf{$\delta$} and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to vary several $\sigma$ away from the mean for \textbf{$\delta$} and \textbf{$\rho$} and see the results.
 \subsubsection{Implementation}
+
+Below you can find our implementation of the two basic clustering algorithms. We are only attaching the functions that hold the core of the clustering mechanism. For further insight please refer to our git repository \cite{git}. 
+
+\begin{center}
+\texttt{DBSCAN}
+\end{center}
+
+\singlespacing
+\lstinputlisting{dbscan.py}
+\doublespacing
+
+\begin{center}
+\texttt{FIDEPE}
+\end{center}
+
 \singlespacing
 \lstinputlisting{fidepe.py}
 \doublespacing
+
+
 \section{Plots}
 
 \begin{figure}[ht]
@@ -219,8 +241,8 @@ Once this two quantities are defined for each point the algorithm identifies the
 
 
 \section{Results}
-\par Referencing Figure \ref{fig:DBSCANplots}, the \texttt{DBSCAN} algorithm does not seem particularly robust to variation in either \texttt{eps} or \texttt{MinPts}. Our proposed mechanism for objectively identifying the number of active clusters appears to fail in almost all test cases. The \texttt{spiral} dataset seems to be the exception, in that the flattest regions of the plots occur at the true number of clusters. The most densely clustered dataset, \texttt{D31}, converges in the range of \texttt{MinPts} plotted to the true cluster number, but fails to plateau in the range of \texttt{eps} plotted. (Describe other datasets?)
-\par Referencing Figure \ref{fig:FIDPEPEplots}, the \texttt{FIDEPE} algorithm is extremely sensitive to the user's choice of parameters. This may be to our ad hoc choice of the standard deviation clustering parameter.
+\par Referencing Figure \ref{fig:DBSCANplots}, the \texttt{DBSCAN} algorithm does not seem particularly robust to variation in either $\boldsymbol{\epsilon}$ or \texttt{MinPts}. Our proposed mechanism for objectively identifying the number of active clusters appears to fail in almost all test cases. The \texttt{spiral} dataset seems to be the exception, in that the flattest regions of the plots occur at the true number of clusters. The most densely clustered dataset, \texttt{D31}, converges in the range of \texttt{MinPts} plotted to the true cluster number, but fails to plateau in the range of \texttt{eps} plotted. (Describe other datasets?)
+\par Referencing Figure \ref{fig:FIDPEPEplots}, the \texttt{FIDEPE} algorithm is extremely sensitive to the user's choice of parameters. This may be to our ad hoc choice of the standard deviation clustering parameter. More.
 
 \par Our choice not to explore the full parameter space for these plots likely has contributed to our inability to find the peak cluster plateau we na\"\i vely expect. However, there is no guarantee of any sort of robustness in these algorithms. It may possible to construct datasets with a plateau on a false cluster number somewhere in the parameter space. We leave these questions for future work, now only concluding that our heuristic is useful in some nonzero percentage of typical datasets.
 \clearpage

@@ -10,7 +10,7 @@ eps = 1
 MinPts = 5
 dim = 2
 global dist
-cutoff_d=5
+cutoff_d= 1
 
 class Point:
     def randomize_pos(self):
@@ -119,7 +119,7 @@ plt.show()
 cutoff_d=4
 '''
 
-def FIDEPE(dist,cutoff_d):
+def FIDEPE(points,dist,cutoff_d):
 #calculating local densities
     for p1 in points:
         for p2 in points:
@@ -245,11 +245,53 @@ else:
     with open('dist.txt','r') as f:
         dist = np.loadtxt(f)
 print("clustering")
-FIDEPE(dist,cutoff_d)
+
+#FIDEPE(dist,cutoff_d)
 
 #DBSCAN2()
-
+'''
 C = [p.cluster_2 for p in points]
 print(C,set(C))
 plt.scatter(data[:,0],data[:,1],c=C,s=100)
 plt.show()
+'''
+cutoff_d_data = []
+for d in np.arange(1,7):
+    for p in points:
+        p.neighbors = set([])
+        p.cluster = 0
+        p.noise = False
+        p.density = 0
+        p.delta = [100000,p]
+        p.cluster_2 = 0
+        p.hborder = False
+        p.clcenter = False
+
+    FIDEPE(points,dist,d)
+    C = [p.cluster for p in points]
+    fig = plt.figure()
+    fig.suptitle('cutoff_d: {0}, Clusters: {1}, stddelta: {2},stddensity {3}'.format(d,len(set(C)),5,0), fontsize=14, fontweight='bold')
+    cutoff_d_data.append(len(set(C)))
+    plt.scatter(pos[:,0],pos[:,1],c=C)
+    plt.savefig('frame{0:02d}'.format(i))
+    plt.close()
+    i+=1
+
+
+plt.plot(np.arange(0,max_stddelta),deltadata)
+plt.xlabel('stddelta'); plt.ylabel('Number of Clusters')
+plt.savefig('fidepe_plots/{0}_stddelta'.format(dataset))
+plt.close()
+plt.plot(np.arange(1,max_cutoff_d),cutoff_d_data,'r-')
+plt.xlabel('cutoff_d'); plt.ylabel('Number of Clusters')
+plt.savefig('fidepe_plots/{0}_cutoff_d'.format(dataset))
+plt.close()
+plt.plot(np.arange(0,max_stddensity,2),densitydata,'g-')
+plt.xlabel('stddensity'); plt.ylabel('Number of Clusters')
+plt.savefig('fidepe_plots/{0}_stddensity'.format(dataset))
+plt.close()
+
+os.system('convert -delay 100 -loop 0 *.png fidepe_plots/{0}.gif; rm frame*.png'.format(dataset))
+
+
+

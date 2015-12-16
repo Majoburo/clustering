@@ -27,7 +27,7 @@ class Point:
         self.noise = False
 #specifics for FIDECE
         self.density = 0
-        self.delta = [100000,0]
+        self.delta = [100000,self]
         self.cluster_2 = 0
         self.hborder = False
         self.clcenter = False
