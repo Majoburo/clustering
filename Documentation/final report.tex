@@ -157,13 +157,13 @@ where
 \end{cases}
 \end{align*}
 
-Minimum Distance to a point of higher density (\textbf{Delta}) is self explanatory. 
+Minimum Distance to a point of higher density ($\boldsymbol{\delta}$) is self explanatory. 
 
 \begin{align*}
 	\delta_i = \text{min}_{j:\rho_j > \rho_i} (d_{ij})
 \end{align*}
 
-For the point of highest density though, \textbf{Delta} is just the maximum distance to another point.
+For the point of highest density though, $\boldsymbol{\delta}$ is just the maximum distance to another point.
 
 \begin{align*}
 	\delta_i = \text{max}_{j} (d_{ij})
@@ -171,16 +171,16 @@ For the point of highest density though, \textbf{Delta} is just the maximum dist
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\linewidth]{fidepe_plots/FIDEPE}
+\includegraphics[width=0.8\linewidth]{../Plots/fidepe_plots/FIDEPE}
 \caption{How the \texttt{FIDEPE} algorithm identifies points in a cluster.}
 \label{fig:FIDEPE}
 \end{figure}
 
 
-Figure \ref{fig:FIDEPE} shows a simple example of the quantities above described. Here \textbf{Rho} is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows are \textbf{Delta}.
+Figure \ref{fig:FIDEPE} shows a simple example of the quantities above described. Here $\boldsymbol{\rho}$ is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows are $\boldsymbol{\delta}$.
 
 
-Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{$\rho$} and \textbf{$\delta$} and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to vary several $\sigma$ away from the mean for \textbf{$\delta$} and \textbf{$\rho$} and see the results.
+Once this two quantities are defined for each point the algorithm identifies the points with both the highest $\boldsymbol{\rho}$ and $\boldsymbol{\delta}$ and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to vary several $\sigma$ away from the mean for $\boldsymbol{\delta}$and $\boldsymbol{\rho}$ and see the results.
 \subsubsection{Implementation}
 
 Below you can find our implementation of the two basic clustering algorithms. We are only attaching the functions that hold the core of the clustering mechanism. For further insight please refer to our git repository \cite{git}. 
@@ -190,7 +190,7 @@ Below you can find our implementation of the two basic clustering algorithms. We
 \end{center}
 
 \singlespacing
-\lstinputlisting{dbscan.py}
+\lstinputlisting{../Scripts/dbscan.py}
 \doublespacing
 
 \begin{center}
@@ -198,7 +198,7 @@ Below you can find our implementation of the two basic clustering algorithms. We
 \end{center}
 
 \singlespacing
-\lstinputlisting{fidepe.py}
+\lstinputlisting{../Scripts/fidepe.py}
 \doublespacing
 
 
@@ -211,25 +211,25 @@ Below you can find our implementation of the two basic clustering algorithms. We
 \label{fig:reference}
 \end{figure}
 
-\begin{figure}[ht]
-\centering
-\raisebox{0.75in}{\rotatebox[]{90}{Aggregation}}
-\includegraphics[width=0.35\linewidth]{plots/Aggregation_eps} \includegraphics[width=0.35\linewidth]{plots/Aggregation_minpts} \\
-\raisebox{0.75in}{\rotatebox[]{90}{Compound}}
-\includegraphics[width=0.35\linewidth]{plots/Compound_eps} \includegraphics[width=0.35\linewidth]{plots/Compound_minpts} \\
-\raisebox{0.75in}{\rotatebox[]{90}{D31}}
-\includegraphics[width=0.35\linewidth]{plots/D31_eps}
-\includegraphics[width=0.35\linewidth]{plots/D31_minpts} \\
-\raisebox{0.75in}{\rotatebox[]{90}{jain}}
-\includegraphics[width=0.35\linewidth]{plots/jain_eps}
-\includegraphics[width=0.35\linewidth]{plots/jain_minpts} \\
-\raisebox{0.75in}{\rotatebox[]{90}{spiral}}
-\includegraphics[width=0.35\linewidth]{plots/spiral_eps}
-\includegraphics[width=0.35\linewidth]{plots/spiral_minpts}
-\caption{(Left) The effects of varying the \texttt{eps} parameter of \texttt{DBSCAN} for all reference distributions. \\ 
-(Right) The effects of varying the \texttt{MinPts} parameter of \texttt{DBSCAN}}.
-\label{fig:DBSCANplots}
-\end{figure}
+%\begin{figure}[ht]
+%\centering
+%\raisebox{0.75in}{\rotatebox[]{90}{Aggregation}}
+%\includegraphics[width=0.35\linewidth]{plots/Aggregation_eps} \includegraphics[width=0.35\linewidth]{plots/Aggregation_minpts} \\
+%\raisebox{0.75in}{\rotatebox[]{90}{Compound}}
+%\includegraphics[width=0.35\linewidth]{plots/Compound_eps} \includegraphics[width=0.35\linewidth]{plots/Compound_minpts} \\
+%\raisebox{0.75in}{\rotatebox[]{90}{D31}}
+%\includegraphics[width=0.35\linewidth]{plots/D31_eps}
+%\includegraphics[width=0.35\linewidth]{plots/D31_minpts} \\
+%\raisebox{0.75in}{\rotatebox[]{90}{jain}}
+%\includegraphics[width=0.35\linewidth]{plots/jain_eps}
+%\includegraphics[width=0.35\linewidth]{plots/jain_minpts} \\
+%\raisebox{0.75in}{\rotatebox[]{90}{spiral}}
+%\includegraphics[width=0.35\linewidth]{plots/spiral_eps}
+%\includegraphics[width=0.35\linewidth]{plots/spiral_minpts}
+%\caption{(Left) The effects of varying the \texttt{eps} parameter of \texttt{DBSCAN} for all reference distributions. \\ 
+%(Right) The effects of varying the \texttt{MinPts} parameter of \texttt{DBSCAN}}.
+%\label{fig:DBSCANplots}
+%\end{figure}
 
 
 \begin{figure}[ht]
