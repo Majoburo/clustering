@@ -263,10 +263,18 @@ Below you can find our implementation of the two basic clustering algorithms. We
 
 \section{Results}
 
-\par Referencing Figure \ref{fig:DBSCANplots}, the \texttt{DBSCAN} algorithm does not seem particularly robust to variation in either $\boldsymbol{\epsilon}$ or \texttt{MinPts}. Our proposed mechanism for objectively identifying the number of active clusters appears to fail in almost all test cases. The \texttt{spiral} dataset seems to be the exception, in that the flattest regions of the plots occur at the true number of clusters. The most densely clustered dataset, \texttt{D31}, converges in the range of \texttt{MinPts} plotted to the true cluster number, but fails to plateau in the range of \texttt{eps} plotted. (Describe other datasets?)
-\par Referencing Figure \ref{fig:FIDPEPEplots}, the \texttt{FIDEPE} algorithm is extremely sensitive to the user's choice of parameters. This may be to our ad hoc choice of the standard deviation clustering parameter. More.
+\par Neither of our algorithms seem to be particularly robust to variations in user-defined parameters. The \texttt{DBSCAN} algorithm seems to have less of a strong dependance on variations on the \texttt{MinPts} in comparison to $\boldsymbol{\epsilon}$, making the later a possible better criterion for the identification of number of clusters.
+\par On the other hand, the \texttt{FIDEPE} algorithm shows huge variations depending on our selection criteria for cluster centers (number of standard deviations from the mean of $\delta$). This might be an artifact of a poor selection criteria on our side. Nevertheless, plots also show significant variations trends regarding the cutoff distance, a key parameter in the original algorithm.
 
-\par Our choice not to explore the full parameter space for these plots likely has contributed to our inability to find the peak cluster plateau we na\"\i vely expect. However, there is no guarantee of any sort of robustness in these algorithms. It may possible to construct datasets with a plateau on a false cluster number somewhere in the parameter space. We leave these questions for future work, now only concluding that our heuristic is useful in some nonzero percentage of typical datasets.
+
+%
+%Referencing Figure \ref{fig:DBSCANplots}, the \texttt{DBSCAN} algorithm does not seem particularly robust to variation in either $\boldsymbol{\epsilon}$ or \texttt{MinPts}. 
+%
+%
+%Referencing Figure \ref{fig:DBSCANplots}, the \texttt{DBSCAN} algorithm does not seem particularly robust to variation in either $\boldsymbol{\epsilon}$ or \texttt{MinPts}. Our proposed mechanism for objectively identifying the number of active clusters appears to fail in almost all test cases. The \texttt{spiral} dataset seems to be the exception, in that the flattest regions of the plots occur at the true number of clusters. The most densely clustered dataset, \texttt{D31}, converges in the range of \texttt{MinPts} plotted to the true cluster number, but fails to plateau in the range of \texttt{eps} plotted. (Describe other datasets?)
+%\par Referencing Figure \ref{fig:FIDPEPEplots}, the \texttt{FIDEPE} algorithm is extremely sensitive to the user's choice of parameters. This may be to our ad hoc choice of the standard deviation clustering parameter. More.
+%
+%\par Our choice not to explore the full parameter space for these plots likely has contributed to our inability to find the peak cluster plateau we na\"\i vely expect. However, there is no guarantee of any sort of robustness in these algorithms. It may possible to construct datasets with a plateau on a false cluster number somewhere in the parameter space. We leave these questions for future work, now only concluding that our heuristic is useful in some nonzero percentage of typical datasets.
 \clearpage
 \bibliographystyle{plain}
 \bibliography{research}
