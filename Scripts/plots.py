@@ -107,7 +107,7 @@ from fidepe2 import FIDEPE
 
 # try clustering a real dataset
 
-datasets = ['Aggregation',#'spiral','Aggregation','jain','Compound'] #'D31'
+datasets = ['spiral','Aggregation','jain','Compound'] #'D31'
 right_cluster_num = [3,7,3,5] # 31
 import os
 
