@@ -10,7 +10,7 @@ eps = 1
 MinPts = 5
 dim = 2
 global dist
-cutoff_d= 3 
+cutoff_d= 3
 nstddelta = 5
 nstddensity = 0
 
@@ -69,35 +69,6 @@ def NewtonVolve(timesteps):
         f.write('%s %s \n' %(p1.pos[0],p1.pos[1]))
     f.close()
 
-def DBSCAN():
-    j=1
-   # pdb.set_trace()
-    for p in points:
-        if not p.visited:
-            p.visited = True
-            regionQuery(p)
-            if len(p.neighbors) < MinPts:
-                p.noise = True
-            else:
-                expandCluster(p,j)
-                j+=1
-
-def expandCluster(p,j):
-   # p.cluster = j
-    neighbors2 = p.neighbors
-    neighbors3 = neighbors2
-    while any((p1.visited == False for p1 in neighbors2)):
-        neighbors3 = neighbors2
-        for p1 in neighbors3:
-            if not p1.visited:
-                p1.visited = True
-                regionQuery(p1)
-                if len(p1.neighbors) >= MinPts:
-                    neighbors2 = p.neighbors|p1.neighbors
-    for p3 in neighbors2:
-        if p3.cluster == 0 and p3.noise == False:
-            p3.cluster = j
-
 def regionQuery(p, eps=eps):
     for p2 in points:
         if dist[p.i,p2.i] < eps:
@@ -136,7 +107,7 @@ from fidepe import FIDEPE
 
 # try clustering a real dataset
 
-datasets = ['spiral','Aggregation']#,'D31','jain','Compound']
+datasets = ['spiral','Aggregation','D31','jain','Compound']
 import os
 
 
@@ -179,86 +150,43 @@ for dataset in datasets:
     pos = np.array([p.pos for p in points])
 
     max_stddelta = 5
-    max_stddensity = 2
     max_cutoff_d = 10
-    deltadata = []
+    data = np.zeros((max_cutoff_d,max_stddelta),dtype=int)
     i=0
-    for d in np.arange(0,max_stddelta):
-        for p in points:
-            p.neighbors = set([])
-            p.cluster = 0
-            p.noise = False
-            p.density = 0
-            p.delta = [100000,0]
-            p.cluster_2 = 0
-            p.hborder = False
-            p.clcenter = False
+    for e in np.arange(0,max_cutoff_d):
+        j=0
+        for d in np.arange(0,max_stddelta):
+            for p in points:
+                p.neighbors = set([])
+                p.cluster = 0
+                p.noise = False
+                p.density = 0
+                p.delta = [100000,0]
+                p.cluster_2 = 0
+                p.hborder = False
+                p.clcenter = False
 
 
-        FIDEPE(points,dist,cutoff_d,d,nstddensity)
-        C = [p.cluster for p in points]
-        fig = plt.figure()
-        fig.suptitle('cutoff_d: {0}, Clusters: {1}, stddelta: {2},stddensity {3}'.format(cutoff_d,len(set(C)),d,nstddensity), fontsize=14, fontweight='bold')
-        deltadata.append(len(set(C)))
-        plt.scatter(pos[:,0],pos[:,1],c=C)
-        plt.savefig('frame{0:02d}'.format(i))
-        plt.close()
+            FIDEPE(points,dist,e,d,nstddensity)
+            C = [p.cluster_2 for p in points]
+            #fig = plt.figure()
+            #fig.suptitle('cutoff_d: {0}, Clusters: {1}, stddelta: {2},stddensity {3}'.format(cutoff_d,len(set(C)),d,nstddensity), fontsize=14, fontweight='bold')
+            data[i,j] = len(set(C))
+            #plt.scatter(pos[:,0],pos[:,1],c=C)
+            #plt.savefig('frame{0:02d}'.format(i))
+            #plt.close()
+            j+=1
         i+=1
-    cutoff_d_data = []
-    for d in np.arange(1,max_cutoff_d):
-         for p in points:
-            p.neighbors = set([])
-            p.cluster = 0
-            p.noise = False
-            p.density = 0
-            p.delta = [100000,0]
-            p.cluster_2 = 0
-            p.hborder = False
-            p.clcenter = False
+    with open('contour.txt'.format(dataset),'w') as f:
+        for j in range(0,max_stddelta):
+            for i in range(0,max_cutoff_d):
+                f.write("{0} {1} {2}\n".format(i,j,data[i,j]))
+            f.write("\n")
+    #plt.contour(np.arange(1,max_cutoff_d),np.arange(0,max_stddelta),data)
+    #plt.xlabel('stddelta'); plt.ylabel('Number of Clusters')
+    #plt.savefig('fidepe_plots/{0}_contour'.format(dataset))
+    #plt.close()
 
-         FIDEPE(points,dist,d,nstddelta,nstddensity)
-         C = [p.cluster for p in points]
-         fig = plt.figure()
-         fig.suptitle('cutoff_d: {0}, Clusters: {1}, stddelta: {2},stddensity {3}'.format(d,len(set(C)),nstddelta,nstddensity), fontsize=14, fontweight='bold')
-         cutoff_d_data.append(len(set(C)))
-         plt.scatter(pos[:,0],pos[:,1],c=C)
-         plt.savefig('frame{0:02d}'.format(i))
-         plt.close()
-         i+=1
-    densitydata = []
-    for d in np.arange(0,max_stddensity,2):
-         for p in points:
-            p.neighbors = set([])
-            p.cluster = 0
-            p.noise = False
-            p.density = 0
-            p.delta = [100000,0]
-            p.cluster_2 = 0
-            p.hborder = False
-            p.clcenter = False
-
-         FIDEPE(points,dist,cutoff_d,nstddelta,d)
-         C = [p.cluster for p in points]
-         fig = plt.figure()
-         fig.suptitle('cutoff_d: {0}, Clusters: {1}, stddelta: {2},stddensity {3}'.format(d,len(set(C)),nstddelta,nstddensity), fontsize=14, fontweight='bold')
-         densitydata.append(len(set(C)))
-         plt.scatter(pos[:,0],pos[:,1],c=C)
-         plt.savefig('frame{0:02d}'.format(i))
-         plt.close()
-         i+=1
-
-
-    plt.plot(np.arange(0,max_stddelta),deltadata)
-    plt.xlabel('stddelta'); plt.ylabel('Number of Clusters')
-    plt.savefig('fidepe_plots/{0}_stddelta'.format(dataset))
-    plt.close()
-    plt.plot(np.arange(1,max_cutoff_d),cutoff_d_data,'r-')
-    plt.xlabel('cutoff_d'); plt.ylabel('Number of Clusters')
-    plt.savefig('fidepe_plots/{0}_cutoff_d'.format(dataset))
-    plt.close()
-    plt.plot(np.arange(0,max_stddensity,2),densitydata,'g-')
-    plt.xlabel('stddensity'); plt.ylabel('Number of Clusters')
-    plt.savefig('fidepe_plots/{0}_stddensity'.format(dataset))
-    plt.close()
-
-    os.system('convert -delay 100 -loop 0 *.png fidepe_plots/{0}.gif; rm frame*.png'.format(dataset))
+    #os.system('convert -delay 100 -loop 0 *.png fidepe_plots/{0}.gif; rm frame*.png'.format(dataset))
+    os.system('gnuplot contour.gnu')
+    os.system('mv plot.ps fidepe_plots/{0}_contour.ps'.format(dataset))

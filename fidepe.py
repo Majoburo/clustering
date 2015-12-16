@@ -74,6 +74,9 @@ def FIDEPE(points,dist,cutoff_d,nstddelta=nstddelta,nstddensity=nstddensity):
             p.cluster_2 = i
             cluster.points.add(p)
     #find unclassified points and append them to a cluster
+    if len(clusters) == 0:
+       #print('no clusters found!')
+       return
     query=0
     while query == 0:
         query=1
@@ -115,6 +118,6 @@ def FIDEPE(points,dist,cutoff_d,nstddelta=nstddelta,nstddensity=nstddensity):
                 p1.noise = True
         cluster.points = points2
         '''
-    posi=np.array([(p.delta[0],p.density) for p in points])
-    plt.scatter(posi[:,0],posi[:,1])
-    plt.show()
+#    posi=np.array([(p.delta[0],p.density) for p in points])
+#    plt.scatter(posi[:,0],posi[:,1])
+#    plt.show()
