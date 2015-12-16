@@ -46,6 +46,7 @@
 % include pdf documents
 \usepackage{pdfpages}
 
+
 %for loops
 \usepackage{pgffor}
 
@@ -171,7 +172,7 @@ For the point of highest density though, $\boldsymbol{\delta}$ is just the maxim
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\linewidth]{../Plots/fidepe/FIDEPE}
+\includegraphics[width=0.8\linewidth]{../plots/fidepe/FIDEPE}
 \caption{How the \texttt{FIDEPE} algorithm identifies points in a cluster.}
 \label{fig:FIDEPE}
 \end{figure}
@@ -191,17 +192,17 @@ Below you can find our implementation of the two basic clustering algorithms. We
 
 \singlespacing
 \lstinputlisting{../Scripts/dbscan.py}
-\doublespacing
+
 
 \begin{center}
 \texttt{FIDEPE}
 \end{center}
 
-\singlespacing
+
 \lstinputlisting{../Scripts/fidepe.py}
+
+
 \doublespacing
-
-
 \section{Plots}
 
 
@@ -228,27 +229,28 @@ Below you can find our implementation of the two basic clustering algorithms. We
 %\label{fig:DBSCANplots}
 %\end{figure}
 
-
+\newgeometry{margin=0.5in}
 \begin{figure}[ht]
 \centering
-\includegraphics[0.4\linewidth]{../plots/dbscan/Aggregation_contour.ps}
-\includegraphics[0.4\linewidth]{../plots/dbscan/Contour_contour.ps} \\
-\includegraphics[0.4\linewidth]{../plots/dbscan/jain_contour.ps}
-\includegraphics[0.4\linewidth]{../plots/dbscan/spiral_contour.ps}
+\includegraphics[width=0.47\linewidth]{../plots/dbscan/Aggregation_contour-crop}
+\includegraphics[width=0.47\linewidth]{../plots/dbscan/Compound_contour-crop} \\
+\includegraphics[width=0.47\linewidth]{../plots/dbscan/jain_contour-crop}
+\includegraphics[width=0.47\linewidth]{../plots/dbscan/spiral_contour-crop}
 \caption{The effects of varying the \texttt{DBSCAN} algorithm parameters. Note that the accepted number of clusters is reached in a fairly wide band in most plots.}
 \label{fig:DBSCANplots}
 \end{figure}
 
 \begin{figure}[ht]
 \centering
-\includegraphics[0.4\linewidth]{../plots/fidepe/Aggregation_3d.ps}
-\includegraphics[0.4\linewidth]{../plots/fidepe/Contour_3d.ps} \\
-\includegraphics[0.4\linewidth]{../plots/fidepe/jain_3d.ps}
-\includegraphics[0.4\linewidth]{../plots/fidepe/spiral_3d.ps}
+\includegraphics[width=0.47\linewidth]{../plots/fidepe/Aggregation_3d-crop}
+\includegraphics[width=0.47\linewidth]{../plots/fidepe/Compound_3d-crop} \\
+\includegraphics[width=0.47\linewidth]{../plots/fidepe/jain_3d-crop}
+\includegraphics[width=0.47\linewidth]{../plots/fidepe/spiral_3d-crop}
 \caption{The effects of varying the \texttt{FIDEPE} parameters.}
 \label{fig:FIDPEPEplots}
 \end{figure}
-
+\restoregeometry
+\doublespacing
 
 
 \section{Results}
