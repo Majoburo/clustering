@@ -250,10 +250,10 @@ Below you can find our implementation of the two basic clustering algorithms. We
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.47\linewidth]{../plots/fidepe/Aggregation_3d-crop}
-\includegraphics[width=0.47\linewidth]{../plots/fidepe/Compound_3d-crop} \\
-\includegraphics[width=0.47\linewidth]{../plots/fidepe/jain_3d-crop}
-\includegraphics[width=0.47\linewidth]{../plots/fidepe/spiral_3d-crop}
+\includegraphics[width=0.47\linewidth]{../plots/fidepe/Aggregation_contour-crop}
+\includegraphics[width=0.47\linewidth]{../plots/fidepe/Compound_contour-crop} \\
+\includegraphics[width=0.47\linewidth]{../plots/fidepe/jain_contour-crop}
+\includegraphics[width=0.47\linewidth]{../plots/fidepe/spiral_contour-crop}
 \caption{The effects of varying the \texttt{FIDEPE} parameters.}
 \label{fig:FIDPEPEplots}
 \end{figure}
@@ -263,8 +263,10 @@ Below you can find our implementation of the two basic clustering algorithms. We
 
 \section{Results}
 
-\par Neither of our algorithms seem to be particularly robust to variations in user-defined parameters. The \texttt{DBSCAN} algorithm seems to have less of a strong dependance on variations on the \texttt{MinPts} in comparison to $\boldsymbol{\epsilon}$, making the later a possible better criterion for the identification of number of clusters.
-\par On the other hand, the \texttt{FIDEPE} algorithm shows huge variations depending on our selection criteria for cluster centers (number of standard deviations from the mean of $\delta$). This might be an artifact of a poor selection criteria on our side. Nevertheless, plots also show significant variations trends regarding the cutoff distance, a key parameter in the original algorithm.
+\par Neither of our algorithms seem to be particularly robust to variations in user-defined parameters. The \texttt{DBSCAN} algorithm seems to have less of a strong dependance on variations on the \texttt{MinPts} in comparison to $\boldsymbol{\epsilon}$. 
+\par Among the data sets used, successful identification of the number of clusters was achieved over a wider range of parameters for the Jain and Spiral cases.
+\par It's worth mentioning, all data sets seem to show a puzzling tendency to periodic behavior under variation of \texttt{MinPts}. 
+\par On the other hand, the \texttt{FIDEPE} algorithm shows huge variations depending on our selection criteria for cluster centers (number of standard deviations from the mean of $\delta$). This might be an artifact of a poor selection criteria on our side. Nevertheless, plots also show significant variations trends regarding the cutoff distance, a key parameter in the original algorithm. Inspection by eye of the clustering identifications shows that there was a significant amount of miscounts, in which even though the right number of clusters they did not correspond to actual clustering.
 
 
 %
