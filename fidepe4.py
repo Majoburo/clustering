@@ -10,7 +10,7 @@ eps = 1
 MinPts = 5
 dim = 2
 global dist
-cutoff_d=5
+cutoff_d= 1
 
 class Point:
     def randomize_pos(self):
@@ -195,61 +195,8 @@ def FIDEPE(dist,cutoff_d):
     plt.scatter(posi[:,0],posi[:,1])
     plt.show()
 #NewtonVolve(timesteps)
-'''
 pos = np.array([p.pos for p in points])
 #C = np.array([p.i,p.cluster for p in points])
 plt.scatter(pos[:,0],pos[:,1])#,c=C)
 plt.show()
-'''
 #DBSCAN2()
-
-#pos = np.array([p.pos for p in points])
-#C = [p.cluster for p in points]
-#print(C)
-#plt.scatter(pos[:,0],pos[:,1],c=C,s=100)
-#plt.show()
-
-
-
-# try clustering a real dataset
-import os.path
-if not os.path.exists('positions.txt'):
-    print("Didn't see test data locally, downloading...")
-    URL = "https://cs.joensuu.fi/sipu/datasets/Aggregation.txt"
-    import requests
-    r = requests.get(URL,verify=False)
-    with open('positions.txt','wb') as f:
-        f.write(r.content)
-    print('downloaded test data')
-f = open('positions.txt','r')
-data = np.loadtxt(f)
-f.close()
-
-points=[]
-for i in range(data.shape[0]):
-    points.append(Point(i,pos=data[i,:]))
-print("Loaded data for " + str(data.shape[0]) + " particles")
-print("Computing distances")
-dist = np.zeros((data.shape[0],data.shape[0]))
-if not os.path.exists('dist.txt'):
-    # recompute dist
-    for p1 in points:
-        for p2 in points:
-            if p2 != p1 and dist[p2.i,p1.i] == 0:
-                dist[p2.i,p1.i] = norm(p1.pos-p2.pos)
-                dist[p1.i,p2.i] = dist[p2.i,p1.i]
-    with open('dist.txt','wb') as f:
-        np.savetxt(f,dist)
-else:
-    print('found saved distance matrix, loading')
-    with open('dist.txt','r') as f:
-        dist = np.loadtxt(f)
-print("clustering")
-FIDEPE(dist,cutoff_d)
-
-#DBSCAN2()
-
-C = [p.cluster_2 for p in points]
-print(C,set(C))
-plt.scatter(data[:,0],data[:,1],c=C,s=100)
-plt.show()

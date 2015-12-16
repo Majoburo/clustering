@@ -27,7 +27,7 @@ class Point:
         self.noise = False
 #specifics for FIDECE
         self.density = 0
-        self.delta = [100000,0]
+        self.delta = [100000,self]
         self.cluster_2 = 0
         self.hborder = False
         self.clcenter = False
@@ -189,7 +189,7 @@ for dataset in datasets:
             p.cluster = 0
             p.noise = False
             p.density = 0
-            p.delta = [100000,0]
+            p.delta = [100000,p]
             p.cluster_2 = 0
             p.hborder = False
             p.clcenter = False
@@ -211,7 +211,7 @@ for dataset in datasets:
             p.cluster = 0
             p.noise = False
             p.density = 0
-            p.delta = [100000,0]
+            p.delta = [100000,p]
             p.cluster_2 = 0
             p.hborder = False
             p.clcenter = False
@@ -232,7 +232,7 @@ for dataset in datasets:
             p.cluster = 0
             p.noise = False
             p.density = 0
-            p.delta = [100000,0]
+            p.delta = [100000,p]
             p.cluster_2 = 0
             p.hborder = False
             p.clcenter = False
