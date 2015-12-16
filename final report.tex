@@ -78,7 +78,7 @@
 commentstyle=\color{OliveGreen},
 keywordstyle=\color{blue},
 tabsize=4,
-numbers=left,
+numbers=none,
 stringstyle=\color{red},
 language=Python,
 inputencoding=utf8,
@@ -177,6 +177,7 @@ Figure \ref{fig:FIDEPE} shows a simple example of the quantities above described
 
 Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{$\rho$} and \textbf{$\delta$} and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to select points 5 $\sigma$ away from the mean for \textbf{$\delta$} and 1 $\sigma$ away for \textbf{$\rho$}. This proved far away from robust.
 \subsubsection{Implementation}
+\singlespacing
 \lstinputlisting{fidepe.py}
 
 \section{Plots}
