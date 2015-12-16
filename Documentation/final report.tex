@@ -240,7 +240,9 @@ Below you can find our implementation of the two basic clustering algorithms. We
 \end{figure}
 
 
+
 \section{Results}
+
 \par Referencing Figure \ref{fig:DBSCANplots}, the \texttt{DBSCAN} algorithm does not seem particularly robust to variation in either $\boldsymbol{\epsilon}$ or \texttt{MinPts}. Our proposed mechanism for objectively identifying the number of active clusters appears to fail in almost all test cases. The \texttt{spiral} dataset seems to be the exception, in that the flattest regions of the plots occur at the true number of clusters. The most densely clustered dataset, \texttt{D31}, converges in the range of \texttt{MinPts} plotted to the true cluster number, but fails to plateau in the range of \texttt{eps} plotted. (Describe other datasets?)
 \par Referencing Figure \ref{fig:FIDPEPEplots}, the \texttt{FIDEPE} algorithm is extremely sensitive to the user's choice of parameters. This may be to our ad hoc choice of the standard deviation clustering parameter. More.
 
