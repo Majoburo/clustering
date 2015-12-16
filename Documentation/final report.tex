@@ -112,12 +112,12 @@ AST 383}
 
 \subsection{\texttt{DBSCAN}}
 
-The \texttt{DBSCAN} (Density-Based Spatial Clustering of Applications with Noise) algorithm is a version of \texttt{FOF} (Friends of Friends) in which, unlike the former, the local density of a point is taken into consideration. This algorithm classifies points as being core points, density-reachable points and outliers. This classification is based on two user defined parameters: the radius of your neighborhood ($\epsilon $) and the minimum amount of points within it ($minPts$). \cite{DBSCAN}
+The \texttt{DBSCAN} (Density-Based Spatial Clustering of Applications with Noise) algorithm is a version of \texttt{FOF} (Friends of Friends) in which, unlike the former, the local density of a point is taken into consideration. This algorithm classifies points as being core points, density-reachable points and outliers. This classification is based on two user defined parameters: the radius of your neighborhood (\texttt{eps}) and the minimum amount of points within it (\texttt{MinPts}). \cite{DBSCAN}
 
 \begin{itemize}
-\item A point $p$ is a core point if at least $minPts$ points are within distance $\epsilon$ of it. Those points are said to be directly reachable from $p$ (in it's neighborhood). No points are reachable from a non-core point.
+\item A point $p$ is a core point if at least \texttt{MinPts} points are within distance \texttt{eps} of it. Those points are said to be directly reachable from $p$ (in it's neighborhood). No points are reachable from a non-core point.
 \item A point $q$ is reachable from $p$ if there is a path $p_1, ..., p_n$ with $p_1 = p$ and $p_n = q$, where each $p_{i+1}$ is directly reachable from $p_i $ (so all the points on the path must be core points, with the possible exception of $q$).
-\item All points not reachable from any other point are outliers.
+\item All points not reachable from any other point are outliers which we mark as noise.
 \end{itemize}
 
 Once a core point is selected, all the points reachable from it will be tagged as part of the same cluster.
@@ -131,12 +131,20 @@ Once a core point is selected, all the points reachable from it will be tagged a
 \label{fig:DBSCAN}
 \end{figure}\
 \FloatBarrier
-Figure \ref{fig:DBSCAN} [wikipedia] shows a simple version of DBSCAN with $minPts = 3$. Point A and the other red points are core points, because at least three points surround it in an $\epsilon$  radius. Because they are all reachable from one another, they form a single cluster. Points B and C are not core points, but are reachable from A (via other core points) and thus belong to the cluster as well. Point N is a noise point that is neither a core point nor density-reachable.
+Figure \ref{fig:DBSCAN} \cite{wiki:dbscan} shows a version of DBSCAN with \texttt{MinPts} $= 3$. Point A and the other red points are core points, because at least three points surround each within an \texttt{eps} radius. Because they are all reachable from one another, they form a single cluster. Points B and C are not core points, but are reachable from A (via other core points) and thus belong to the cluster as well. Point N is a noise point that is neither a core point nor density-reachable.
+\par For completeness, we have included the Python code for \texttt{DBSCAN} we used in this project below. 
 
+\begin{center}
+\texttt{DBSCAN}
+\end{center}
+\singlespacing
+\lstinputlisting{../Scripts/dbscan.py}
+\doublespacing
+\par The density checks mentioned above are implemented as a call to \texttt{regionQuery}, which check the points in the \texttt{eps}-neighborhood. Clusters grow, after getting identified, by a call to \texttt{expandCluster}, which marks a point as noise if it has too few neighbors, or otherwise adds it to a list of core points that will be recursively expanded if the density requirements are met at each iteration.
 % when talking about code
 \par It's worth noting a few optimizations that can be made to our implementation of this algorithm.
 The distances between points, instead of being computed for each point ($O(N^2)$ lookups), can be computed in a type of tree structure ($O(N \log(N))$ lookups). Such position-tree structures are often called R-trees or R*-trees.
-In addition, the \texttt{expandCluster} routine is only called from a single location, so it may be safely inlined.
+In addition, the \texttt{expandCluster} routine is only called from a single location, so it may be safely inlined. In the interest of simply surveying these clustering algorithms, we have not pursued these optimizations.
 
 %prediction under varying parameters
 \pagebreak
@@ -186,12 +194,6 @@ Once this two quantities are defined for each point the algorithm identifies the
 
 Below you can find our implementation of the two basic clustering algorithms. We are only attaching the functions that hold the core of the clustering mechanism. For further insight please refer to our git repository \cite{git}. 
 
-\begin{center}
-\texttt{DBSCAN}
-\end{center}
-
-\singlespacing
-\lstinputlisting{../Scripts/dbscan.py}
 
 
 \begin{center}

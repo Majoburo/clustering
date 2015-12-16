@@ -1,6 +1,6 @@
 #set terminal and output
 set terminal postscript enhanced color
-set output '../plots/fidepe/Compound_contour.ps'
+set output 'plot.ps'
  
 # Set various features of the plot
 #set key outside
@@ -31,4 +31,4 @@ set format y '%.1f'
 set format z '%.0f'
  
 # Now plot
-splot '../plots/fidepe/Compound.dat' using 1:2:3 title 'Compound' with lines lt 1,'../plots/fidepe/Compound.dat' using 1:2:3 notitle with labels
+splot 'contour.txt' using 1:2:3 title passedtitle with lines lt 1,'contour.txt' using 1:2:3 notitle with labels
