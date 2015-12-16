@@ -132,7 +132,7 @@ Once a core point is selected, all the points reachable from it will be tagged a
 \end{figure}\
 \FloatBarrier
 Figure \ref{fig:DBSCAN} \cite{wiki:dbscan} shows a version of DBSCAN with \texttt{MinPts} $= 3$. Point A and the other red points are core points, because at least three points surround each within an \texttt{eps} radius. Because they are all reachable from one another, they form a single cluster. Points B and C are not core points, but are reachable from A (via other core points) and thus belong to the cluster as well. Point N is a noise point that is neither a core point nor density-reachable.
-\par For completeness, we have included the Python code for \texttt{DBSCAN} we used in this project below. 
+\par For completeness, we have included the Python code for \texttt{DBSCAN} we used in this project below. Routines not crucial to the core of the algorithm have been omitted. For further information including full source code please visit our GitHub repository.\cite{git}
 
 \begin{center}
 \texttt{DBSCAN}
@@ -140,20 +140,20 @@ Figure \ref{fig:DBSCAN} \cite{wiki:dbscan} shows a version of DBSCAN with \textt
 \singlespacing
 \lstinputlisting{../Scripts/dbscan.py}
 \doublespacing
-\par The density checks mentioned above are implemented as a call to \texttt{regionQuery}, which check the points in the \texttt{eps}-neighborhood. Clusters grow, after getting identified, by a call to \texttt{expandCluster}, which marks a point as noise if it has too few neighbors, or otherwise adds it to a list of core points that will be recursively expanded if the density requirements are met at each iteration.
+\par The density checks mentioned above are implemented as a call to \texttt{regionQuery}, which populates the \texttt{point.neighbors} list. Clusters grow, after getting identified, by a call to \texttt{expandCluster}, which marks a point as noise if it has too few neighbors, or otherwise adds it to a list of core points that will be recursively expanded if the density requirements are met at each iteration.
 % when talking about code
 \par It's worth noting a few optimizations that can be made to our implementation of this algorithm.
 The distances between points, instead of being computed for each point ($O(N^2)$ lookups), can be computed in a type of tree structure ($O(N \log(N))$ lookups). Such position-tree structures are often called R-trees or R*-trees.
-In addition, the \texttt{expandCluster} routine is only called from a single location, so it may be safely inlined. In the interest of simply surveying these clustering algorithms, we have not pursued these optimizations.
+In addition, the \texttt{expandCluster} routine is only called from a single location, so it may be safely inlined. In the interest of only surveying these clustering algorithms, we have not pursued these optimizations.
 
 %prediction under varying parameters
 \pagebreak
 
 \subsection{FIDEPE}
 
-\texttt{FIDEPE} (FInd DEnsity PEaks) algorithm \cite{FIDEPE} considers two criteria per point: Local Density and Minimum Distance to a point of higher density.
+\texttt{FIDEPE} (FInd DEnsity PEaks) algorithm \cite{FIDEPE} considers two criteria per point: local density and minimum distance to a point of higher density.
 
-Local density ($\boldsymbol{\rho}$), is defined as the number of points $j$ in the "neighborbood"; points closer than $d_c$ from point $i$.
+Local density ($\boldsymbol{\rho}$), is defined as the number of points $j$ in the ``neighborhood": points closer than $d_c$ from point $i$.
 \begin{align*}
 	\rho_i = \sum_j \chi(d_{ij}-d_c)
 \end{align*}
@@ -162,53 +162,37 @@ where
 \chi(x)=
 \begin{cases}
 1 & x < 0 \\
-0 & otherwise
+0 & \textrm{otherwise}
 \end{cases}
 \end{align*}
-
-Minimum Distance to a point of higher density ($\boldsymbol{\delta}$) is self explanatory. 
-
+Minimum distance to a point of higher density ($\boldsymbol{\delta}$) is self explanatory. 
 \begin{align*}
-	\delta_i = \text{min}_{j:\rho_j > \rho_i} (d_{ij})
+	\delta_i = \text{min}_{j|\rho_j > \rho_i} (d_{ij})
 \end{align*}
-
-For the point of highest density though, $\boldsymbol{\delta}$ is just the maximum distance to another point.
-
+For the point of highest density, however, $\boldsymbol{\delta}$ is defined to be the maximum distance to another point.
 \begin{align*}
 	\delta_i = \text{max}_{j} (d_{ij})
 \end{align*}
-
+\FloatBarrier
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\linewidth]{../plots/fidepe/FIDEPE}
 \caption{How the \texttt{FIDEPE} algorithm identifies points in a cluster.}
 \label{fig:FIDEPE}
 \end{figure}
+\FloatBarrier
+Figure \ref{fig:FIDEPE} shows a simple example of the quantities described above. Here $\boldsymbol{\rho}$ is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows are $\boldsymbol{\delta}$.
+\par Once these two quantities are defined for each point, the algorithm identifies the points with both the highest $\boldsymbol{\rho}$ and $\boldsymbol{\delta}$ and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to use the number of standard deviations ($\sigma$) away from the mean for $\boldsymbol{\delta}$ and $\boldsymbol{\rho}$ as our classifier. The number of standard deviations (\texttt{(nstddelta}) we chose turned out to greatly impact algorithm performance. Plots of \texttt{FIDEPE}'s performance under variation of this parameter and $d_c$ are available below.
 
+Below you can find our implementation of \texttt{FIDEPE} as described above. As above, we are only attaching the functions that hold the core of the clustering mechanism. For further insight please see \cite{git}.
 
-Figure \ref{fig:FIDEPE} shows a simple example of the quantities above described. Here $\boldsymbol{\rho}$ is marked as numbers above each of the points, the circles around them define a neighborhood of radius $d_c$ and the directed arrows are $\boldsymbol{\delta}$.
-
-
-Once this two quantities are defined for each point the algorithm identifies the points with both the highest $\boldsymbol{\rho}$ and $\boldsymbol{\delta}$ and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to vary several $\sigma$ away from the mean for $\boldsymbol{\delta}$and $\boldsymbol{\rho}$ and see the results.
-\subsubsection{Implementation}
-
-Below you can find our implementation of the two basic clustering algorithms. We are only attaching the functions that hold the core of the clustering mechanism. For further insight please refer to our git repository \cite{git}. 
-
-
-
+\singlespacing
 \begin{center}
 \texttt{FIDEPE}
 \end{center}
-
-
 \lstinputlisting{../Scripts/fidepe.py}
-
-
 \doublespacing
 \section{Plots}
-
-
-
 %\begin{figure}[ht]
 %\centering
 %\raisebox{0.75in}{\rotatebox[]{90}{Aggregation}}
@@ -228,7 +212,6 @@ Below you can find our implementation of the two basic clustering algorithms. We
 %(Right) The effects of varying the \texttt{MinPts} parameter of \texttt{DBSCAN}}.
 %\label{fig:DBSCANplots}
 %\end{figure}
-
 \newgeometry{margin=0.5in}
 \begin{figure}[ht]
 \centering
@@ -236,7 +219,7 @@ Below you can find our implementation of the two basic clustering algorithms. We
 \includegraphics[width=0.47\linewidth]{../plots/datasets/Compound} \\
 \includegraphics[width=0.47\linewidth]{../plots/datasets/jain}
 \includegraphics[width=0.47\linewidth]{../plots/datasets/spiral}
-\caption{The test datasets used in this analysis. The points are highlighted by cluster number. For reference, the accepted number of clusters for each dataset is, from left-to-right and top-to-bottom, 7,5,2, and 3.}
+\caption{The test datasets used in this analysis, from \cite{datasets}. The points are highlighted by reference cluster number. For reference, the accepted number of clusters for each dataset is, from left-to-right and top-to-bottom, 7,5,2, and 3.}
 \label{fig:distributions}
 \end{figure}
 
