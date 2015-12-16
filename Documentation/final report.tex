@@ -248,10 +248,10 @@ Below you can find our implementation of \texttt{FIDEPE} as described above. As 
 
 \section{Results}
 
-\par Were our algorithms robust to variations in the user-defined parameters, we would have expected a plateau around the right value of the number of clusters for each of our datasets. Sadly, that wasn't the case for either of them.
-\par The \texttt{DBSCAN} algorithm seems to have less of a strong dependance on variations on the \texttt{MinPts} in comparison to $\boldsymbol{\epsilon}$. For \texttt{DBSCAN}, among the datasets used, successful identification of the number of clusters was achieved over a wider range of parameters only for jain. Having said that though, the behavior for all the test cases remains fairly linear under variations of the parameters, which might be correlated to the fact that it's just appending clusters together as the parameters vary.
- 
+\par Initially, we expected to find some type of flat region in the number of clusters as we varied these algorithms' user-defined parameters. Were our algorithms robust to variations, we would have expected that the true clustering had some margin of error -- i.e., true clusters would tend to remain in well-defined high-density regions, while false clusters would tend to quickly merge or split. Sadly, this wasn't the case for either of our algorithms.
+\par The \texttt{DBSCAN} algorithm seems to have less of a strong dependence on variations on the \texttt{MinPts} parameter in comparison to \texttt{eps}. For \texttt{DBSCAN}, among the datasets used, successful identification of the number of clusters was achieved over a wider range of parameters only for the \texttt{jain} dataset. Having said that though, the behavior for all the test cases remains fairly linear under variations of the parameters, which might be correlated to the fact that \texttt{DBSCAN} tends to append neighboring clusters together as the parameters vary.
 \par On the other hand, the \texttt{FIDEPE} algorithm shows huge variations depending on our selection criteria for cluster centers (number of standard deviations from the mean of $\delta$). This might be an artifact of a poor selection criteria on our side. Nevertheless, plots also show significant variations trends regarding the cutoff distance, a key parameter in the original algorithm. Inspection by eye of the clustering identifications shows that there was a significant amount of miscounts, in which even though the right number of clusters was achieved, the algorithm failed to identify the actual clusters; unlike  \texttt{DBSCAN} it showed non-linear behavior under such variations.
+\par Animated, colored plots of the datasets under several variations of these parameters are available in our GitHub repository. \cite{git}
 
 
 %
