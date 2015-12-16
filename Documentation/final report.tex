@@ -96,7 +96,7 @@ AST 383}
 \maketitle
 
 \begin{abstract}
-\par For our final project, we decided to implement and compare the robustness of two top of the line density-based clustering algorithms under variations of user-defined parameters.
+\par Case comparison of the robustness a top of the line density-based clustering algorithm, \texttt{DBSCAN},  to another one recently proposed, \texttt{FIDEPE}, under variations of user-defined parameters.
 \end{abstract}
 
 \doublespacing
@@ -248,10 +248,10 @@ Below you can find our implementation of \texttt{FIDEPE} as described above. As 
 
 \section{Results}
 
-\par Neither of our algorithms seem to be particularly robust to variations in user-defined parameters. The \texttt{DBSCAN} algorithm seems to have less of a strong dependance on variations on the \texttt{MinPts} in comparison to $\boldsymbol{\epsilon}$. 
-\par Among the data sets used, successful identification of the number of clusters was achieved over a wider range of parameters for the Jain and Spiral cases.
-\par It's worth mentioning, all data sets seem to show a puzzling tendency to periodic behavior under variation of \texttt{MinPts}. 
-\par On the other hand, the \texttt{FIDEPE} algorithm shows huge variations depending on our selection criteria for cluster centers (number of standard deviations from the mean of $\delta$). This might be an artifact of a poor selection criteria on our side. Nevertheless, plots also show significant variations trends regarding the cutoff distance, a key parameter in the original algorithm. Inspection by eye of the clustering identifications shows that there was a significant amount of miscounts, in which even though the right number of clusters they did not correspond to actual clustering.
+\par Were our algorithms robust to variations in the user-defined parameters, we would have expected a plateau around the right value of the number of clusters for each of our datasets. Sadly, that wasn't the case for either of them.
+\par The \texttt{DBSCAN} algorithm seems to have less of a strong dependance on variations on the \texttt{MinPts} in comparison to $\boldsymbol{\epsilon}$. For \texttt{DBSCAN}, among the datasets used, successful identification of the number of clusters was achieved over a wider range of parameters only for jain. Having said that though, the behavior for all the test cases remains fairly linear under variations of the parameters, which might be correlated to the fact that it's just appending clusters together as the parameters vary.
+ 
+\par On the other hand, the \texttt{FIDEPE} algorithm shows huge variations depending on our selection criteria for cluster centers (number of standard deviations from the mean of $\delta$). This might be an artifact of a poor selection criteria on our side. Nevertheless, plots also show significant variations trends regarding the cutoff distance, a key parameter in the original algorithm. Inspection by eye of the clustering identifications shows that there was a significant amount of miscounts, in which even though the right number of clusters was achieved, the algorithm failed to identify the actual clusters; unlike  \texttt{DBSCAN} it showed non-linear behavior under such variations.
 
 
 %
