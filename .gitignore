@@ -6,3 +6,5 @@
 *.pdf
 *.synctex.gz
 *.txt
+__pycache__*
+*.pyc
