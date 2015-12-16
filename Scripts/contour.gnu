@@ -1,6 +1,6 @@
 #set terminal and output
 set terminal postscript enhanced color
-set output '../plots/fidepe/jain_contour.ps'
+set output '../plots/fidepe/Compound_contour.ps'
  
 # Set various features of the plot
 #set key outside
@@ -8,6 +8,7 @@ set output '../plots/fidepe/jain_contour.ps'
 set contour
 unset surface  # don't need surfaces
 set view map
+set key left top outside
 #set hidden3d
 #set logscale z
 set dgrid3d #plot non-uniform gridded data
@@ -30,4 +31,4 @@ set format y '%.1f'
 set format z '%.0f'
  
 # Now plot
-splot '../plots/fidepe/jain.dat' using 1:2:3 title 'jain' with lines lt 1,'../plots/fidepe/jain.dat' using 1:2:3 notitle with labels
+splot '../plots/fidepe/Compound.dat' using 1:2:3 title 'Compound' with lines lt 1,'../plots/fidepe/Compound.dat' using 1:2:3 notitle with labels
