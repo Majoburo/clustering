@@ -74,17 +74,17 @@
 \usepackage{natbib}
 
 %settings for Python code
-%\lstset{basicstyle=\footnotesize\ttfamily,
-%commentstyle=\color{OliveGreen},
-%keywordstyle=\color{blue},
-%tabsize=4,
-%numbers=left,
-%stringstyle=\color{red},
-%language=Python,
-%inputencoding=utf8,
-%extendedchars=true,
-%showstringspaces=flase,
-% }
+\lstset{basicstyle=\footnotesize\ttfamily,
+commentstyle=\color{OliveGreen},
+keywordstyle=\color{blue},
+tabsize=4,
+numbers=left,
+stringstyle=\color{red},
+language=Python,
+inputencoding=utf8,
+extendedchars=true,
+showstringspaces=flase,
+}
 
 \begin{document}
 \singlespacing
@@ -104,12 +104,12 @@ AST 383}
 \section{Clustering Algorithms}
 \par For our final project we decided to implement and compare the robustness of two density-based clustering algorithms under variations of user-defined parameters. 
 Clustering algorithms have a wide variety of applications that range from satellite image segmentation, noise filtering and outlier detection, prediction of stock prices to bioinformatics. In particular, they are of high importance in astronomy when trying to identify dark matter halos and sub-halo structure.
-There is a wide range of clustering algorithms out there for the taking. When handling large amounts of particles (in the order of trillions) the question of simplicity an easy parallelization arises also as a defining criterion. Both of the algorithms compared here are quite simple and easy to parallelize. \texttt{DBSCAN} is currently implemented on the latest halo-finders being developed \cite{BDCATS} and \textt{FIDEPE}, being quite a new algorithm, still has no implementation on cosmology (at least that we know of), the more reason to explore the code's performance.
+There is a wide range of clustering algorithms out there for the taking. When handling large amounts of particles (in the order of trillions) the question of simplicity an easy parallelization arises also as a defining criterion. Both of the algorithms compared here are quite simple and easy to parallelize. \texttt{DBSCAN} is currently implemented on the latest halo-finders being developed \cite{BDCATS} and \texttt{FIDEPE}, being quite a new algorithm, still has no implementation on cosmology (at least that we know of), the more reason to explore the code's performance.
 
 
 \subsection{\texttt{DBSCAN}}
 
-The \texttt{DBSCAN} (Density-Based Spatial Clustering of Applications with Noise) algorithm is a version of \texttt{FOF} (Friends of Friends) in which, unlike the former, the local density of a point is taken into consideration. This algorithm classifies points as being core points, density-reachable points and outliers. This classification is based on two user defined parameters: the radius of your neighborhood ($\epsilon $) and the minimum amount of points within it ($minPts$).
+The \texttt{DBSCAN} (Density-Based Spatial Clustering of Applications with Noise) algorithm is a version of \texttt{FOF} (Friends of Friends) in which, unlike the former, the local density of a point is taken into consideration. This algorithm classifies points as being core points, density-reachable points and outliers. This classification is based on two user defined parameters: the radius of your neighborhood ($\epsilon $) and the minimum amount of points within it ($minPts$). \cite{DBSCAN}
 
 \begin{itemize}
 \item A point $p$ is a core point if at least $minPts$ points are within distance ? of it (in it's neighborhood). Those points are said to be directly reachable from $p$. No points are reachable from a non-core point.
@@ -176,6 +176,8 @@ Figure \ref{fig:FIDEPE} shows a simple example of the quantities above described
 
 
 Once this two quantities are defined for each point the algorithm identifies the points with both the highest \textbf{$\rho$} and \textbf{$\delta$} and tags them as cluster centers. The choice for how many of them fall under this criterion is not specified in the original code. We decided to select points 5 $\sigma$ away from the mean for \textbf{$\delta$} and 1 $\sigma$ away for \textbf{$\rho$}. This proved far away from robust.
+\subsubsection{Implementation}
+\lstinputlisting{fidepe.py}
 
 \section{Plots}
 
